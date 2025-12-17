@@ -18,6 +18,11 @@ Route::middleware(['auth', 'isadmin'])->prefix('admin')->name('admin.')->group(f
     Route::post('/permintaan-akun/{id}/reject', [AdminRequestAkunController::class, 'reject'])->name('request.reject');
 });
 
+// hanya untuk akun dengan auth isstaff
+Route::middleware(['auth', 'isstaff'])->prefix('staff')->name('staff.')->group(function () {
+    Route::get('/dashboard', [StaffDashboardController::class, 'index'])->name('dashboard');
+});
+
 Route::get('/request-akun', [PublicRequestAkunController::class, 'create'])->name('request-akun.form');
 Route::post('/request-akun', [PublicRequestAkunController::class, 'store'])->name('request-akun.submit');
 
