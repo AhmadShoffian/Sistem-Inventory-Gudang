@@ -16,28 +16,28 @@ class DashboardController extends Controller
     {
         $totalBarang = Barang::count();
 
-        $totalBarangRusak = KerusakanBarang::where('kondisi', 'rusak')->count();
+        // $totalBarangRusak = KerusakanBarang::where('kondisi', 'rusak')->count();
 
-        $totalPembelian = Pengadaan::whereNotNull('harga_satuan')
-            ->whereNotNull('tanggal_pengadaan')
-            ->whereMonth('tanggal_pengadaan', now()->month)
-            ->whereYear('tanggal_pengadaan', now()->year)
-            ->sum(DB::raw('jumlah * harga_satuan'));
+        // $totalPembelian = Pengadaan::whereNotNull('harga_satuan')
+        //     ->whereNotNull('tanggal_pengadaan')
+        //     ->whereMonth('tanggal_pengadaan', now()->month)
+        //     ->whereYear('tanggal_pengadaan', now()->year)
+        //     ->sum(DB::raw('jumlah * harga_satuan'));
 
-        $totalPerbaikan = KerusakanBarang::where('kondisi', 'baik')
-            ->whereMonth('updated_at', now()->month)
-            ->whereYear('updated_at', now()->year)
-            ->sum('biaya_perbaikan');
+        // $totalPerbaikan = KerusakanBarang::where('kondisi', 'baik')
+        //     ->whereMonth('updated_at', now()->month)
+        //     ->whereYear('updated_at', now()->year)
+        //     ->sum('biaya_perbaikan');
 
-        $totalPengadaanBulanIni = $totalPembelian + $totalPerbaikan;
+        // $totalPengadaanBulanIni = $totalPembelian + $totalPerbaikan;
 
-        $totalNoticePajak = Skpd::sum('jumlah_sisa');
+        // $totalNoticePajak = Skpd::sum('jumlah_sisa');
 
         return view('staff.dashboard', compact(
             'totalBarang',
-            'totalBarangRusak',
-            'totalPengadaanBulanIni',
-            'totalNoticePajak'
+            // 'totalBarangRusak',
+            // 'totalPengadaanBulanIni',
+            // 'totalNoticePajak'
         ));
     }
 }

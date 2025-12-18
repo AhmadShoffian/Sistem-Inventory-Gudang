@@ -5,35 +5,43 @@ namespace App\Http\Controllers\Staff;
 use App\Http\Controllers\Controller;
 use App\Models\Barang;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class BarangController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Barang::query();
+        // $query = Barang::query();
 
-        $kategoris = Barang::select('kategori')->distinct()->pluck('kategori');
+        // $kategoris = Barang::select('kategori')->distinct()->pluck('kategori');
 
-        if ($request->has('search') || $request->has('kategori')) {
-            $search = $request->search;
-            $query->where(function ($q) use ($search) {
-                $q->where('nama_barang', 'like', $search . '%')
-                  ->orWhere('nama_barang', 'like', '% ' . $search . '%')
-                  ->orWhere('nama_barang', 'like', '%' . $search . '%');
-            });
+        // if ($request->has('search') || $request->has('kategori')) {
+        //     $search = $request->search;
+        //     $query->where(function ($q) use ($search) {
+        //         $q->where('nama_barang', 'like', $search . '%')
+        //           ->orWhere('nama_barang', 'like', '% ' . $search . '%')
+        //           ->orWhere('nama_barang', 'like', '%' . $search . '%');
+        //     });
 
-            if ($request->kategori) {
-                $query->where('kategori', $request->kategori);
-            }
-        }
+        //     if ($request->kategori) {
+        //         $query->where('kategori', $request->kategori);
+        //     }
+        // }
 
-        $barangs = $query->get();
+        // $barangs = $query->get();
 
-        if ($request->ajax()) {
-            return view('staff.barang._table', compact('barangs'))->render();
-        }
+        // if ($request->ajax()) {
+        //     return view('staff.barang._table', compact('barangs'))->render();
+        // }
 
-        return view('staff.barang.index', compact('barangs', 'kategoris'));
+        // return view('staff.barang.index', compact('barangs', 'kategoris'));
+
+        $user = Auth::user();
+
+        $queryBarang = Barang::with(['kategori', 'lokasi', 'satuan', 'kondisi']);
+        $barangs = $queryBarang->get();
+
+        return view('staff.barang.index', compact('user', 'barangs'));
     }
 
     public function create()

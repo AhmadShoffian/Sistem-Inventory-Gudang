@@ -49,4 +49,9 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function barangCreated()
+    {
+        return $this->hasMany(Barang::class, 'created_by_user_id');
+    }
 }

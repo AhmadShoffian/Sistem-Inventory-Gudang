@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\RequestAkunController as PublicRequestAkunController;
 use App\Http\Controllers\Admin\RequestAkunController as AdminRequestAkunController;
+use App\Http\Controllers\Staff\DashboardController as StaffDashboardController;
+use App\Http\Controllers\Staff\BarangController;
 
 
 Route::get('/', function () {
@@ -21,6 +23,7 @@ Route::middleware(['auth', 'isadmin'])->prefix('admin')->name('admin.')->group(f
 // hanya untuk akun dengan auth isstaff
 Route::middleware(['auth', 'isstaff'])->prefix('staff')->name('staff.')->group(function () {
     Route::get('/dashboard', [StaffDashboardController::class, 'index'])->name('dashboard');
+    Route::get('/barang', [BarangController::class, 'index'])->name('barang.index');
 });
 
 Route::get('/request-akun', [PublicRequestAkunController::class, 'create'])->name('request-akun.form');

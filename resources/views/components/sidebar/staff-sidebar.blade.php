@@ -73,21 +73,21 @@
             </a>
           </li>
 
-          <li class="items-center">
+          {{-- <li class="items-center">
             <a href="{{ route('staff.pengadaan.index') }}"
               class="text-xs uppercase py-3 font-bold block {{ request()->routeIs('staff.pengadaan.index') ? 'text-lightBlue-500 hover:text-lightBlue-600' : 'text-blueGray-700 hover:text-blueGray-500' }}">
               <i class="fas fa-shopping-cart mr-2 text-sm {{ request()->routeIs('staff.pengadaan.index') ? 'opacity-75' : 'text-blueGray-300' }}"></i>
               Pengadaan
             </a>
-          </li>
+          </li> --}}
 
-          <li class="items-center">
+          {{-- <li class="items-center">
             <a href="{{ route('staff.report.index') }}"
               class="text-xs uppercase py-3 font-bold block {{ request()->routeIs('staff.report.index') ? 'text-lightBlue-500 hover:text-lightBlue-600' : 'text-blueGray-700 hover:text-blueGray-500' }}">
               <i class="fas fa-receipt mr-2 text-sm {{ request()->routeIs('staff.report.index') ? 'opacity-75' : 'text-blueGray-300' }}"></i>
               Laporan Pengadaan
             </a>
-          </li>
+          </li> --}}
 
           {{-- === Sensus Aset Tetap === --}}
           <h6 class="md:min-w-full text-blueGray-500 text-xs uppercase font-bold block mt-6 mb-2 px-4">
@@ -95,22 +95,22 @@
           </h6>
 
           {{-- Inventaris Aset --}}
-          <li class="items-center">
+          {{-- <li class="items-center">
             <a href="{{ route('staff.aset.index') }}"
               class="text-xs uppercase py-3 font-bold block {{ request()->routeIs('staff.aset.index') ? 'text-lightBlue-500 hover:text-lightBlue-600' : 'text-blueGray-700 hover:text-blueGray-500' }}">
               <i class="fas fa-box-open mr-2 text-sm {{ request()->routeIs('staff.aset.index') ? 'opacity-75' : 'text-blueGray-300' }}"></i>
               Inventaris Aset
             </a>
-          </li>
+          </li> --}}
 
           {{-- Kerusakan --}}
-          <li class="items-center">
+          {{-- <li class="items-center">
             <a href="{{ route('staff.kerusakan.index') }}"
               class="text-xs uppercase py-3 font-bold block {{ request()->routeIs('staff.kerusakan.index') ? 'text-lightBlue-500 hover:text-lightBlue-600' : 'text-blueGray-700 hover:text-blueGray-500' }}">
               <i class="fas fa-exclamation-triangle mr-2 text-sm {{ request()->routeIs('staff.kerusakan.index') ? 'opacity-75' : 'text-blueGray-300' }}"></i>
               Kerusakan
             </a>
-          </li>
+          </li> --}}
 
           {{-- === SECTION: NOTICE PAJAK === --}}
           <h6 class="md:min-w-full text-blueGray-500 text-xs uppercase font-bold block mt-6 mb-2 px-4">
@@ -118,22 +118,22 @@
           </h6>
 
           {{-- Kotak SKPD --}}
-          <li class="items-center">
+          {{-- <li class="items-center">
             <a href="{{ route('staff.skpd.index') }}"
               class="text-xs uppercase py-3 font-bold block {{ request()->routeIs('staff.skpd.*') ? 'text-lightBlue-500 hover:text-lightBlue-600' : 'text-blueGray-700 hover:text-blueGray-500' }}">
               <i class="fas fa-archive mr-2 text-sm {{ request()->routeIs('staff.skpd.*') ? 'opacity-75' : 'text-blueGray-300' }}"></i>
               Inventaris SKPD
             </a>
-          </li>
+          </li> --}}
 
           {{-- Laporan Harian --}}
-          <li class="items-center">
+          {{-- <li class="items-center">
             <a href="{{ route('staff.laporan-skpd.index') }}"
               class="text-xs uppercase py-3 font-bold block {{ request()->routeIs('staff.laporan-skpd.*') ? 'text-lightBlue-500 hover:text-lightBlue-600' : 'text-blueGray-700 hover:text-blueGray-500' }}">
               <i class="fas fa-calendar-check mr-2 text-sm {{ request()->routeIs('staff.laporan-skpd.*') ? 'opacity-75' : 'text-blueGray-300' }}"></i>
               Laporan Harian
             </a>
-          </li>
+          </li> --}}
 
           {{-- === SECTION: LAINNYA === --}}
           <h6 class="md:min-w-full text-blueGray-500 text-xs uppercase font-bold block mt-6 mb-2 px-4">
