@@ -2,70 +2,99 @@
 
 namespace App\Http\Controllers\Staff;
 
-use App\Http\Controllers\Controller;
 use App\Models\Barang;
+use App\Models\Satuan;
+use App\Models\Kategori;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
 class BarangController extends Controller
 {
+    // public function index(Request $request)
+    // {
+    //     $query = Barang::query();
+
+    //     $kategoris = Barang::select('kategori')->distinct()->pluck('kategori');
+
+    //     if ($request->has('search') || $request->has('kategori')) {
+    //         $search = $request->search;
+    //         $query->where(function ($q) use ($search) {
+    //             $q->where('nama_barang', 'like', $search . '%')
+    //               ->orWhere('nama_barang', 'like', '% ' . $search . '%')
+    //               ->orWhere('nama_barang', 'like', '%' . $search . '%');
+    //         });
+
+    //         if ($request->kategori) {
+    //             $query->where('kategori', $request->kategori);
+    //         }
+    //     }
+
+    //     $barangs = $query->get();
+
+    //     if ($request->ajax()) {
+    //         return view('staff.barang._table', compact('barangs'))->render();
+    //     }
+
+    //     return view('staff.barang.index', compact('barangs', 'kategoris'));
+    // }
+
     public function index(Request $request)
     {
-        // $query = Barang::query();
+        $query = Barang::with(['kategori', 'satuan', 'kondisi', 'lokasi']);
 
-        // $kategoris = Barang::select('kategori')->distinct()->pluck('kategori');
+        // Dropdown kategori
+        $kategoris = Kategori::orderBy('nama_kategori')->get();
 
-        // if ($request->has('search') || $request->has('kategori')) {
-        //     $search = $request->search;
-        //     $query->where(function ($q) use ($search) {
-        //         $q->where('nama_barang', 'like', $search . '%')
-        //           ->orWhere('nama_barang', 'like', '% ' . $search . '%')
-        //           ->orWhere('nama_barang', 'like', '%' . $search . '%');
-        //     });
+        // Search nama barang
+        if ($request->filled('search')) {
+            $query->where('nama_barang', 'like', '%' . $request->search . '%');
+        }
 
-        //     if ($request->kategori) {
-        //         $query->where('kategori', $request->kategori);
-        //     }
-        // }
+        // Filter kategori
+        if ($request->filled('kategori_id')) {
+            $query->where('kategori_id', $request->kategori_id);
+        }
 
-        // $barangs = $query->get();
+        $barangs = $query->get();
 
-        // if ($request->ajax()) {
-        //     return view('staff.barang._table', compact('barangs'))->render();
-        // }
+        // AJAX
+        if ($request->ajax()) {
+            return view('staff.barang._table', compact('barangs'))->render();
+        }
 
-        // return view('staff.barang.index', compact('barangs', 'kategoris'));
-
-        $user = Auth::user();
-
-        $queryBarang = Barang::with(['kategori', 'lokasi', 'satuan', 'kondisi']);
-        $barangs = $queryBarang->get();
-
-        return view('staff.barang.index', compact('user', 'barangs'));
+        return view('staff.barang.index', compact('barangs', 'kategoris'));
     }
 
     public function create()
     {
-        return view('staff.barang.create');
+        return view('staff.barang.create', [
+            'kategoris' => Kategori::orderBy('nama_kategori')->get(),
+            'satuans'   => Satuan::orderBy('nama_satuan')->get(),
+        ]);
     }
 
     public function store(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'nama_barang' => 'required|string|max:255',
-            'kategori' => 'required|string',
-            'satuan' => 'required|string',
-            'ketersediaan' => 'required|integer|min:1',
+            'kategori_id' => 'required|exists:kategoris,id',
+            'satuan_id'   => 'required|exists:satuans,id',
+            'jumlah'      => 'required|integer|min:1',
         ]);
 
         Barang::create([
-            'nama_barang' => $request->nama_barang,
-            'kategori' => $request->kategori,
-            'satuan' => $request->satuan,
-            'ketersediaan' => $request->ketersediaan, 
+            'nama_barang'        => $validated['nama_barang'],
+            'kategori_id'        => $validated['kategori_id'],
+            'satuan_id'          => $validated['satuan_id'],
+            'jumlah'             => $validated['jumlah'],
+            'status_barang'      => 'aktif',
+            'created_by_user_id' => auth()->id(),
         ]);
 
-        return redirect()->route('staff.barang.index')->with('success', 'Barang berhasil ditambahkan!');
+        return redirect()
+            ->route('staff.barang.index')
+            ->with('success', 'Barang berhasil ditambahkan!');
     }
 
     public function edit($id)

@@ -24,6 +24,9 @@ Route::middleware(['auth', 'isadmin'])->prefix('admin')->name('admin.')->group(f
 Route::middleware(['auth', 'isstaff'])->prefix('staff')->name('staff.')->group(function () {
     Route::get('/dashboard', [StaffDashboardController::class, 'index'])->name('dashboard');
     Route::get('/barang', [BarangController::class, 'index'])->name('barang.index');
+    Route::get('/barang/create', [BarangController::class, 'create'])->name('barang.create');
+    Route::post('/barang', [BarangController::class, 'store'])->name('barang.store');
+
 });
 
 Route::get('/request-akun', [PublicRequestAkunController::class, 'create'])->name('request-akun.form');
