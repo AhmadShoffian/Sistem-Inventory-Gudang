@@ -7,6 +7,7 @@ use App\Models\Satuan;
 use App\Models\Kategori;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Lokasi;
 use Illuminate\Support\Facades\Auth;
 
 class BarangController extends Controller
@@ -71,6 +72,7 @@ class BarangController extends Controller
         return view('staff.barang.create', [
             'kategoris' => Kategori::orderBy('nama_kategori')->get(),
             'satuans'   => Satuan::orderBy('nama_satuan')->get(),
+            'lokasis'   => Lokasi::orderBy('nama_lokasi')->get(),
         ]);
     }
 
@@ -78,8 +80,9 @@ class BarangController extends Controller
     {
         $validated = $request->validate([
             'nama_barang' => 'required|string|max:255',
-            'kategori_id' => 'required|exists:kategoris,id',
-            'satuan_id'   => 'required|exists:satuans,id',
+            'kategori_id' => 'required|exists:kategori_barang,id',
+            'satuan_id'   => 'required|exists:satuan_barang,id',
+            'lokasi_id'   => 'required|exists:lokasi,id',
             'jumlah'      => 'required|integer|min:1',
         ]);
 
@@ -88,6 +91,7 @@ class BarangController extends Controller
             'kategori_id'        => $validated['kategori_id'],
             'satuan_id'          => $validated['satuan_id'],
             'jumlah'             => $validated['jumlah'],
+            'lokasi_id'          => $validated['lokasi_id'],
             'status_barang'      => 'aktif',
             'created_by_user_id' => auth()->id(),
         ]);

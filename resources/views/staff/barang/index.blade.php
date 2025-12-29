@@ -44,7 +44,7 @@
           @endforeach --}}
                         @foreach ($kategoris as $kategori)
                             <option value="{{ $kategori->id }}">
-                                {{ $kategori->nama }}
+                                {{ $kategori->nama_kategori }}
                             </option>
                         @endforeach
                     </select>

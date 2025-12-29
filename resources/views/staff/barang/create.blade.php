@@ -79,7 +79,21 @@
                             <option value="">-- Pilih Satuan --</option>
                             @foreach ($satuans as $satuan)
                                 <option value="{{ $satuan->id }}" {{ old('satuan_id') == $satuan->id ? 'selected' : '' }}>
-                                    {{ $satuan->nama }}
+                                    {{ $satuan->nama_satuan }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    {{-- Lokasi --}}
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-blueGray-600 mb-1">Lokasi</label>
+                        <select name="lokasi_id"
+                            class="w-full border px-4 py-2 rounded text-sm focus:ring-2 focus:ring-lightBlue-500" required>
+                            <option value="">-- Pilih Lokasi --</option>
+                            @foreach ($lokasis as $lokasi)
+                                <option value="{{ $lokasi->id }}" {{ old('lokasi_id') == $lokasi->id ? 'selected' : '' }}>
+                                    {{ $lokasi->nama_lokasi }}
                                 </option>
                             @endforeach
                         </select>

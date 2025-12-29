@@ -62,7 +62,7 @@
 
                     {{-- === Pengadaan Habis Pakai === --}}
                     <h6 class="md:min-w-full text-blueGray-500 text-xs uppercase font-bold block mt-6 mb-2 px-4">
-                        Pengadaan Habis Pakai
+                        MASTER DATA
                     </h6>
 
                     {{-- Barang --}}
@@ -92,16 +92,7 @@
                             Satuan Barang
                         </a>
                     </li>
-                    
-                    <li class="items-center">
-                        <a href="{{ route('staff.kondisi.index') }}"
-                            class="text-xs uppercase py-3 font-bold block {{ request()->routeIs('staff.kondisi.index') ? 'text-lightBlue-500 hover:text-lightBlue-600' : 'text-blueGray-700 hover:text-blueGray-500' }}">
-                            <i
-                                class="fas fa-shopping-cart mr-2 text-sm {{ request()->routeIs('staff.kondisi.index') ? 'opacity-75' : 'text-blueGray-300' }}"></i>
-                            Kondisi Barang
-                        </a>
-                    </li>
-
+                        {{-- Lokasi Barang --}}
                     <li class="items-center">
                         <a href="{{ route('staff.lokasi.index') }}"
                             class="text-xs uppercase py-3 font-bold block {{ request()->routeIs('staff.lokasi.index') ? 'text-lightBlue-500 hover:text-lightBlue-600' : 'text-blueGray-700 hover:text-blueGray-500' }}">
@@ -122,9 +113,28 @@
 
                     {{-- === Sensus Aset Tetap === --}}
                     <h6 class="md:min-w-full text-blueGray-500 text-xs uppercase font-bold block mt-6 mb-2 px-4">
-                        Sensus Aset Tetap
+                        TRANSAKSI
                     </h6>
 
+                    {{-- Peminjaman Barang --}}
+                    <li class="items-center">
+                        <a href="{{ route('staff.pinjam_barang.index') }}"
+                            class="text-xs uppercase py-3 font-bold block {{ request()->routeIs('staff.pinjam_barang.index') ? 'text-lightBlue-500 hover:text-lightBlue-600' : 'text-blueGray-700 hover:text-blueGray-500' }}">
+                            <i
+                                class="fas fa-box mr-2 text-sm {{ request()->routeIs('staff.pinjam_barang.index') ? 'opacity-75' : 'text-blueGray-300' }}"></i>
+                            Peminjaman Barang
+                        </a>
+                    </li>
+                    
+                    {{-- Pengembalian Barang --}}
+                    <li class="items-center">
+                        <a href="{{ route('staff.bali_barang.index') }}"
+                            class="text-xs uppercase py-3 font-bold block {{ request()->routeIs('staff.bali_barang.index') ? 'text-lightBlue-500 hover:text-lightBlue-600' : 'text-blueGray-700 hover:text-blueGray-500' }}">
+                            <i
+                                class="fas fa-box mr-2 text-sm {{ request()->routeIs('staff.bali_barang.index') ? 'opacity-75' : 'text-blueGray-300' }}"></i>
+                            Pengembalian Barang
+                        </a>
+                    </li>
                     {{-- Inventaris Aset --}}
                     {{-- <li class="items-center">
             <a href="{{ route('staff.aset.index') }}"

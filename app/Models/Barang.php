@@ -31,17 +31,17 @@ class Barang extends Model
     
     public function satuan()
     {
-        return $this->belongsTo(Satuan::class, 'kategori_id');
+        return $this->belongsTo(Satuan::class, 'satuan_id');
     }
     
     public function kondisi()
     {
-        return $this->belongsTo(Kondisi::class, 'kategori_id');
+        return $this->belongsTo(Kondisi::class, 'kondisi_id');
     }
 
     public function lokasi()
     {
-        return $this->belongsTo(Lokasi::class, 'kategori_id');
+        return $this->belongsTo(Lokasi::class, 'lokasi_id');
     }
     
     public function createdBy()

@@ -20,4 +20,24 @@ class LokasiController extends Controller
 
         return view('staff.lokasi.index', compact('lokasis'));
     }
+
+    public function create()
+    {
+        return view('staff.lokasi.create');
+    }
+
+    public function store(Request $request) 
+    {
+        $validated = $request->validate([
+            'nama_lokasi' => 'required|string|max:255',
+        ]);
+
+        Lokasi::create([
+            'nama_lokasi' => $validated['nama_lokasi']
+        ]);
+
+        return redirect()
+            ->route('staff.lokasi.index')
+            ->with('success', 'Lokasi berhasil ditambahkan!');
+    }
 }

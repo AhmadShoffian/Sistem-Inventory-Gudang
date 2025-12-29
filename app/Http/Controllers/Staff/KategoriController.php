@@ -32,7 +32,7 @@ class KategoriController extends Controller
         ]);
 
         Kategori::create([
-            'nama_kategori'        => $validated['nama_kategori']
+            'nama_kategori' => $validated['nama_kategori']
         ]);
 
         return redirect()
