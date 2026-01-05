@@ -38,7 +38,7 @@
             </div>
 
             <div class="px-6 py-6">
-                <form method="POST" action="{{ route('staff.barang.store') }}">
+                <form method="POST" action="{{ route('staff.barang.store') }}" enctype="multipart/form-data" autocomplete="on">
                     @csrf
 
                     {{-- Nama Barang --}}
@@ -97,6 +97,17 @@
                                 </option>
                             @endforeach
                         </select>
+                    </div>
+
+                     <div class="mb-4">
+                        <label class="block text-sm font-medium text-blueGray-600 mb-1">Gambar</label>
+                        <input type="file" name="lampiran" value="{{ old('lampiran') }}"
+                            class="w-full border px-4 py-2 rounded text-sm focus:ring-2 focus:ring-lightBlue-500" required>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-blueGray-600 mb-1">Deskripsi</label>
+                        <textarea name="deskripsi" rows="3" class="w-full border px-4 py-2 rounded text-sm focus:ring-2 focus:ring-lightBlue-500" required>{{ old('deskripsi') }}</textarea>
                     </div>
 
                     {{-- Tombol --}}

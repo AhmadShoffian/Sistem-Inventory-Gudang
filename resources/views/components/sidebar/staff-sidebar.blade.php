@@ -102,6 +102,27 @@
                         </a>
                     </li>
 
+                    <h6 class="md:min-w-full text-blueGray-500 text-xs uppercase font-bold block mt-6 mb-2 px-4">
+                        PERUSAHAAN
+                    </h6>
+
+                    {{-- Supplier --}}
+                    <li class="items-center">
+                        <a href="{{ route('staff.supplier.index') }}"
+                            class="text-xs uppercase py-3 font-bold block {{ request()->routeIs('staff.supplier.index') ? 'text-lightBlue-500 hover:text-lightBlue-600' : 'text-blueGray-700 hover:text-blueGray-500' }}">
+                            <i class="fas fa-box mr-2 text-sm {{ request()->routeIs('staff.supplier.index') ? 'opacity-75' : 'text-blueGray-300' }}"></i>
+                            Supplier
+                        </a>
+                    </li>
+
+                    {{-- Customer --}}
+                    <li class="items-center">
+                        <a href="{{ route('staff.customer.index') }}"
+                            class="text-xs uppercase py-3 font-bold block {{ request()->routeIs('staff.customer.index') ? 'text-lightBlue-500 hover:text-lightBlue-600' : 'text-blueGray-700 hover:text-blueGray-500' }}">
+                            <i class="fas fa-box mr-2 text-sm {{ request()->routeIs('staff.customer.index') ? 'opacity-75' : 'text-blueGray-300' }}"></i>
+                            Customer
+                        </a>
+                    </li>
 
                     {{-- <li class="items-center">
             <a href="{{ route('staff.report.index') }}"
@@ -122,7 +143,7 @@
                             class="text-xs uppercase py-3 font-bold block {{ request()->routeIs('staff.pinjam_barang.index') ? 'text-lightBlue-500 hover:text-lightBlue-600' : 'text-blueGray-700 hover:text-blueGray-500' }}">
                             <i
                                 class="fas fa-box mr-2 text-sm {{ request()->routeIs('staff.pinjam_barang.index') ? 'opacity-75' : 'text-blueGray-300' }}"></i>
-                            Peminjaman Barang
+                            Barang Masuk
                         </a>
                     </li>
                     
@@ -132,7 +153,7 @@
                             class="text-xs uppercase py-3 font-bold block {{ request()->routeIs('staff.bali_barang.index') ? 'text-lightBlue-500 hover:text-lightBlue-600' : 'text-blueGray-700 hover:text-blueGray-500' }}">
                             <i
                                 class="fas fa-box mr-2 text-sm {{ request()->routeIs('staff.bali_barang.index') ? 'opacity-75' : 'text-blueGray-300' }}"></i>
-                            Pengembalian Barang
+                            Barang Keluar
                         </a>
                     </li>
                     {{-- Inventaris Aset --}}

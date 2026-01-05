@@ -6,7 +6,9 @@ use App\Http\Controllers\Staff\BarangController;
 use App\Http\Controllers\Staff\LokasiController;
 use App\Http\Controllers\Staff\SatuanController;
 use App\Http\Controllers\Staff\KondisiController;
+use App\Http\Controllers\Staff\CustomerController;
 use App\Http\Controllers\Staff\KategoriController;
+use App\Http\Controllers\Staff\SupplierController;
 use App\Http\Controllers\Staff\PeminjamanController;
 use App\Http\Controllers\Staff\PengembalianController;
 use App\Http\Controllers\RequestAkunController as PublicRequestAkunController;
@@ -57,6 +59,19 @@ Route::middleware(['auth', 'isstaff'])->prefix('staff')->name('staff.')->group(f
     Route::get('/peminjaman-barang', [PeminjamanController::class, 'index'])->name('pinjam_barang.index');
     
     Route::get('/pengembalian-barang', [PengembalianController::class, 'index'])->name('bali_barang.index');
+
+    Route::get('/supplier', [SupplierController::class, 'index'])->name('supplier.index');
+    Route::get('/supplier/create', [SupplierController::class, 'create'])->name('supplier.create');
+    Route::post('/supplier', [SupplierController::class, 'store'])->name('supplier.store');
+    Route::get('/supplier/{id}/edit', [SupplierController::class, 'edit'])->name('supplier.edit');
+    Route::delete('/supplier/{id}', [SupplierController::class, 'destroy'])->name('supplier.destroy');
+
+    Route::get('/customer', [CustomerController::class, 'index'])->name('customer.index');
+    Route::get('/customer/create', [CustomerController::class, 'create'])->name('customer.create');
+    Route::post('/customer', [CustomerController::class, 'store'])->name('customer.store');
+    Route::get('/customer/{id}/edit', [CustomerController::class, 'edit'])->name('customer.edit');
+    Route::delete('/customer/{id}', [CustomerController::class, 'destroy'])->name('customer.destroy');
+
 });
 
 Route::get('/request-akun', [PublicRequestAkunController::class, 'create'])->name('request-akun.form');
@@ -74,11 +89,6 @@ Route::get('/dashboard', function () {
         auth()->user()->role === 'admin' ? 'admin.dashboard' : 'staff.dashboard'
     );
 })->middleware('auth')->name('dashboard');
-
-
-
-
-
 
 
 require __DIR__.'/auth.php';
