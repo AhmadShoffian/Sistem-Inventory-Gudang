@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Staff;
 use App\Models\Customer;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
 
 class CustomerController extends Controller
 {
@@ -23,5 +24,26 @@ class CustomerController extends Controller
         return view('staff.customer.create');
     }
 
+    public function store(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'alamat' => 'required|string|max:255',
+        ]);
+
+        if($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+
+        $customer = Customer::create([
+            'name'                  => $request->name,
+            'alamat'                => $request->alamat,
+            'created_by_user_id'    => auth()->user()->id,
+        ]);
+
+        return redirect()
+            ->route('staff.customer.index')
+            ->with('success', 'Customer berhasil ditambahkan!');
+    }
 
 }

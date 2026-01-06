@@ -10,6 +10,7 @@ use App\Http\Controllers\Staff\CustomerController;
 use App\Http\Controllers\Staff\KategoriController;
 use App\Http\Controllers\Staff\SupplierController;
 use App\Http\Controllers\Staff\PeminjamanController;
+use App\Http\Controllers\Staff\BarangMasukController;
 use App\Http\Controllers\Staff\PengembalianController;
 use App\Http\Controllers\RequestAkunController as PublicRequestAkunController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
@@ -57,7 +58,6 @@ Route::middleware(['auth', 'isstaff'])->prefix('staff')->name('staff.')->group(f
     Route::delete('/lokasi/{id}', [LokasiController::class, 'destroy'])->name('lokasi.destroy');
 
     Route::get('/peminjaman-barang', [PeminjamanController::class, 'index'])->name('pinjam_barang.index');
-    
     Route::get('/pengembalian-barang', [PengembalianController::class, 'index'])->name('bali_barang.index');
 
     Route::get('/supplier', [SupplierController::class, 'index'])->name('supplier.index');
@@ -71,6 +71,13 @@ Route::middleware(['auth', 'isstaff'])->prefix('staff')->name('staff.')->group(f
     Route::post('/customer', [CustomerController::class, 'store'])->name('customer.store');
     Route::get('/customer/{id}/edit', [CustomerController::class, 'edit'])->name('customer.edit');
     Route::delete('/customer/{id}', [CustomerController::class, 'destroy'])->name('customer.destroy');
+
+    Route::get('/barang-masuk', [BarangMasukController::class, 'index'])->name('barang_masuk.index');
+    Route::get('/barang-masuk/create', [BarangMasukController::class, 'create'])->name('barang_masuk.create');
+    Route::post('/barang-masuk', [BarangMasukController::class, 'store'])->name('barang_masuk.store');
+    Route::get('/barang-masuk/{id}/edit', [BarangMasukController::class, 'edit'])->name('barang_masuk.edit');
+    Route::delete('/barang-masuk/{id}', [BarangMasukController::class, 'destroy'])->name('barang_masuk.destroy');
+
 
 });
 

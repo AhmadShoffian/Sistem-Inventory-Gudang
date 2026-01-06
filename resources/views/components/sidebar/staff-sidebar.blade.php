@@ -139,10 +139,9 @@
 
                     {{-- Peminjaman Barang --}}
                     <li class="items-center">
-                        <a href="{{ route('staff.pinjam_barang.index') }}"
-                            class="text-xs uppercase py-3 font-bold block {{ request()->routeIs('staff.pinjam_barang.index') ? 'text-lightBlue-500 hover:text-lightBlue-600' : 'text-blueGray-700 hover:text-blueGray-500' }}">
-                            <i
-                                class="fas fa-box mr-2 text-sm {{ request()->routeIs('staff.pinjam_barang.index') ? 'opacity-75' : 'text-blueGray-300' }}"></i>
+                        <a href="{{ route('staff.barang_masuk.index') }}"
+                            class="text-xs uppercase py-3 font-bold block {{ request()->routeIs('staff.barang_masuk.index') ? 'text-lightBlue-500 hover:text-lightBlue-600' : 'text-blueGray-700 hover:text-blueGray-500' }}">
+                            <i class="fas fa-box mr-2 text-sm {{ request()->routeIs('staff.barang_masuk.index') ? 'opacity-75' : 'text-blueGray-300' }}"></i>
                             Barang Masuk
                         </a>
                     </li>
