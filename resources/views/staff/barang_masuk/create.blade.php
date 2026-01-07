@@ -36,14 +36,6 @@
             <div class="px-6 py-6">
                 <form method="POST" action="{{ route('staff.barang_masuk.store') }}">
                     @csrf
-
-                    {{-- <div class="mb-4">
-                        <label class="block text-sm font-medium text-blueGray-600 mb-1">Tanggal Masuk</label>
-                        <input type="date" name="tanggal_masuk" id="tanggal_masuk" value="{{ old('tanggal_masuk') }}"
-                            class="w-full border px-4 py-2 rounded text-sm focus:outline-none focus:ring-2 focus:ring-lightBlue-500"
-                            required>
-                    </div> --}}
-
                     <div class="mb-4">
                         <label class="block text-sm font-medium text-blueGray-600 mb-1">Tanggal Masuk</label>
                         <input type="date" value="{{ now()->toDateString() }}"
@@ -53,30 +45,27 @@
 
 
                     <div class="mb-4">
-                        <label for="kode_transaksi">Kode Transaksi</label>
-                        <input type="text" name="kode_transaksi" id="kode_transaksi" value="{{ old('kode_transaksi') }}"
-                            class="w-full border px-4 py-2 rounded text-sm focus:outline-none focus:ring-2 focus:ring-lightBlue-500"
-                            required>
+                        <label for="kode_barang_masuk">Kode Transaksi</label>
+                        <input type="text" name="kode_barang_masuk" id="kode_barang_masuk"
+                            class="w-full border px-4 py-2 rounded text-sm bg-gray-100" readonly>
+
                     </div>
 
                     <div class="mb-4">
-                        <label for="nama_barang">Pilih Barang</label>
-                        <select name="barang_id" id="barang_id"
-                            class="w-full border px-4 py-2 rounded text-sm focus:outline-none focus:ring-2 focus:ring-lightBlue-500"
-                            required>
+                        <label for="barang_id">Pilih Barang</label>
+                        <select name="barang_id" id="barang_id" class="w-full border px-4 py-2 rounded text-sm" required>
                             <option value="" disabled selected>-- Pilih Barang --</option>
                             @foreach ($barangs as $barang)
-                                <option value="{{ $barang->id }}" {{ old('barang_id') == $barang->id ? 'selected' : '' }}>
+                                <option value="{{ $barang->id }}">
                                     {{ $barang->nama_barang }}
                                 </option>
                             @endforeach
                         </select>
                     </div>
                     <div class="mb-4">
-                        <label for="stok_saat_ini">Stok Saat Ini</label>
-                        <input type="number" name="stok" id="stok"
-                            class="w-full border px-4 py-2 rounded text-sm focus:outline-none focus:ring-2 focus:ring-lightBlue-500"
-                            disabled>
+                        <label for="stok">Stok Saat Ini</label>
+                        <input type="number" id="stok"
+                            class="w-full border px-4 py-2 rounded text-sm bg-gray-100 cursor-not-allowed" disabled>
                     </div>
 
                     <div class="mb-4">
@@ -103,19 +92,19 @@
                     </div>
 
                     <div class="mb-4">
-                        <label for="nama_supplier">Pilih Satuan</label>
-                        <select name="supplier_id" id="supplier_id"
-                            class="w-full border px-4 py-2 rounded text-sm focus:outline-none focus:ring-2 focus:ring-lightBlue-500"
-                            required>
-                            <option value="" disabled selected>-- Pilih Satuan --</option>
+                        <label for="satuan_id">Satuan</label>
+                        <select id="satuan_display"
+                            class="w-full border px-4 py-2 rounded text-sm bg-gray-100 cursor-not-allowed" disabled>
+                            <option value="">-- Satuan --</option>
                             @foreach ($satuans as $satuan)
-                                <option value="{{ $satuan->id }}"
-                                    {{ old('satuan_id') == $satuan->id ? 'selected' : '' }}>
+                                <option value="{{ $satuan->id }}">
                                     {{ $satuan->nama_satuan }}
                                 </option>
                             @endforeach
                         </select>
+                        <input type="hidden" name="satuan_id" id="satuan_id">
                     </div>
+
 
                     <div class="flex justify-end gap-2">
                         <a href="{{ route('staff.barang_masuk.index') }}"
@@ -160,12 +149,47 @@
 
             const kode = `TRX-IN-${yyyy}${mm}${dd}-${random}`;
 
-            document.getElementById('kode_transaksi').value = kode;
+            document.getElementById('kode_barang_masuk').value = kode;
         }
 
         document.addEventListener('DOMContentLoaded', function() {
             generateKodeTransaksi();
         });
     </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const stokUrl = "{{ route('staff.barang.stok', ':id') }}";
 
+            const barangSelect = document.getElementById('barang_id');
+            const stokInput = document.getElementById('stok');
+            const satuanHidden = document.getElementById('satuan_id');
+            const satuanDisplay = document.getElementById('satuan_display');
+
+            barangSelect.addEventListener('change', function() {
+                const barangId = this.value;
+
+                fetch(stokUrl.replace(':id', barangId))
+                    .then(res => {
+                        if (!res.ok) throw new Error('Gagal ambil data barang');
+                        return res.json();
+                    })
+                    .then(data => {
+                        // ✔ isi stok
+                        stokInput.value = data.stok;
+
+                        // ✔ isi hidden input (untuk dikirim ke backend)
+                        satuanHidden.value = data.satuan_id;
+
+                        // ✔ set selected option di select display
+                        satuanDisplay.value = data.satuan_id;
+                    })
+                    .catch(err => {
+                        console.error(err);
+                        stokInput.value = '';
+                        satuanHidden.value = '';
+                        satuanDisplay.value = '';
+                    });
+            });
+        });
+    </script>
 @endsection

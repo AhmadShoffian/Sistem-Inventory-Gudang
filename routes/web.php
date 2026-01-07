@@ -77,7 +77,7 @@ Route::middleware(['auth', 'isstaff'])->prefix('staff')->name('staff.')->group(f
     Route::post('/barang-masuk', [BarangMasukController::class, 'store'])->name('barang_masuk.store');
     Route::get('/barang-masuk/{id}/edit', [BarangMasukController::class, 'edit'])->name('barang_masuk.edit');
     Route::delete('/barang-masuk/{id}', [BarangMasukController::class, 'destroy'])->name('barang_masuk.destroy');
-
+    Route::get('/barang/{id}/stok', [BarangMasukController::class, 'getStokBarang'])->name('barang.stok');
 
 });
 
@@ -98,4 +98,4 @@ Route::get('/dashboard', function () {
 })->middleware('auth')->name('dashboard');
 
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

@@ -8,6 +8,7 @@ use App\Models\Supplier;
 use App\Models\BarangMasuk;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 
@@ -39,48 +40,45 @@ class BarangMasukController extends Controller
             'satuans' => Satuan::all(),
         ]);
     }
-
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'kode_transaksi'    => 'required|string|max:255',
-            'tanggal_masuk'     => 'required|date',
-            'nama_barang'       => 'required|string|max:255',
-            'jumlah_barang'     => 'required|integer',
-            'supplier_id'       => 'required|exists:suppliers,id',
-        ], [
-            'kode_transaksi.required'   => 'Kode Transaksi wajib diisi.',
-            'tanggal_masuk.required'    => 'Tanggal Masuk wajib diisi.',
-            'nama_barang.required'      => 'Nama Barang wajib diisi.',
-            'jumlah_barang.required'    => 'Jumlah Barang wajib diisi.',
-            'supplier_id.required'      => 'Supplier wajib dipilih.',
+        $request->validate([
+            'kode_barang_masuk' => 'required|unique:barang_masuks,kode_barang_masuk',
+            'tanggal_masuk'  => 'required|date',
+            'barang_id'      => 'required|exists:barang,id',
+            'supplier_id'    => 'required|exists:suppliers,id',
+            'jumlah_masuk'   => 'required|integer|min:1',
+            'satuan_id'      => 'required|exists:satuan_barang,id',
         ]);
 
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), 422);
-        }
+        DB::transaction(function () use ($request) {
 
-        $barangMasuk = BarangMasuk::create([
-            'kode_transaksi' => $this->generateKodeTransaksi(),
-            'tanggal_masuk'        => $request->tanggal_masuk,
-            'nama_barang'          => $request->nama_barang,
-            'jumlah_masuk'         => $request->jumlah_barang,
-            'supplier_id'          => $request->supplier_id,
-            'created_by_user_id'   => auth()->user()->id,
-        ]);
+            $barang = Barang::lockForUpdate()->findOrFail($request->barang_id);
 
-        if ($barangMasuk) {
-            $barang = Barang::where('nama_barang', $request->nama_barang)->first();
-            if ($barang) {
-                $barang->stok += $request->jumlah_barang;
-                $barang->save();
+            if ($barang->satuan_id != $request->satuan_id) {
+                abort(403, 'Satuan tidak sesuai dengan barang');
             }
-        }
+
+            BarangMasuk::create([
+                'kode_barang_masuk' => $this->generateKodeTransaksi(),
+                'tanggal_masuk'  => $request->tanggal_masuk,
+                'barang_id'      => $request->barang_id,
+                'supplier_id'    => $request->supplier_id,
+                'jumlah_masuk'   => $request->jumlah_masuk,
+                'satuan_id'      => $request->satuan_id,
+                'created_by_user_id' => auth()->id(),
+            ]);
+
+            $barang->increment('jumlah', $request->jumlah_masuk);
+        });
 
         return redirect()
             ->route('staff.barang_masuk.index')
-            ->with('success', 'Barang Masuk berhasil ditambahkan!');
+            ->with('success', 'Barang masuk berhasil ditambahkan dan stok otomatis bertambah.');
     }
+
+
+
 
     public function getAutoCompleteData(Request $request)
     {
@@ -114,5 +112,15 @@ class BarangMasukController extends Controller
             : 1;
 
         return 'TRX-IN-' . $tanggal . '-' . str_pad($urutan, 4, '0', STR_PAD_LEFT);
+    }
+
+    public function getStokBarang($id)
+    {
+        $barang = Barang::findOrFail($id);
+
+        return response()->json([
+            'stok' => $barang->jumlah,
+            'satuan_id' => $barang->satuan_id
+        ]);
     }
 }

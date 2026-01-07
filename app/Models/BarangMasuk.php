@@ -12,7 +12,7 @@ class BarangMasuk extends Model
     use HasFactory;
     use LogsActivity;
 
-    protected $fillable = ['kode_transaksi', 'tanggal_masuk', 'nama_barang', 'jumlah_barang', 'supplier_id', 'created_by_user_id'];
+    protected $fillable = ['kode_barang_masuk', 'tanggal_masuk', 'barang_id', 'jumlah_masuk', 'supplier_id', 'created_by_user_id'];
     protected $guarded = [''];
     protected $ignoreChangedAttributes = ['updated_at'];
 
@@ -31,5 +31,20 @@ class BarangMasuk extends Model
     public function supplier()
     {
         return $this->belongsTo(Supplier::class, 'supplier_id');
+    }
+
+    public function barang()
+    {
+        return $this->belongsTo(Barang::class, 'barang_id');
+    }
+
+    public function satuan()
+    {
+        return $this->belongsTo(Satuan::class, 'satuan_id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'created_by_user_id');
     }
 }
