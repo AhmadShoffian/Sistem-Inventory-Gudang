@@ -148,10 +148,10 @@
                     
                     {{-- Pengembalian Barang --}}
                     <li class="items-center">
-                        <a href="{{ route('staff.bali_barang.index') }}"
-                            class="text-xs uppercase py-3 font-bold block {{ request()->routeIs('staff.bali_barang.index') ? 'text-lightBlue-500 hover:text-lightBlue-600' : 'text-blueGray-700 hover:text-blueGray-500' }}">
+                        <a href="{{ route('staff.barang_keluar.index') }}"
+                            class="text-xs uppercase py-3 font-bold block {{ request()->routeIs('staff.barang_keluar.index') ? 'text-lightBlue-500 hover:text-lightBlue-600' : 'text-blueGray-700 hover:text-blueGray-500' }}">
                             <i
-                                class="fas fa-box mr-2 text-sm {{ request()->routeIs('staff.bali_barang.index') ? 'opacity-75' : 'text-blueGray-300' }}"></i>
+                                class="fas fa-box mr-2 text-sm {{ request()->routeIs('staff.barang_keluar.index') ? 'opacity-75' : 'text-blueGray-300' }}"></i>
                             Barang Keluar
                         </a>
                     </li>

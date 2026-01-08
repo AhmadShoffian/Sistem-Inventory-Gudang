@@ -11,6 +11,7 @@ use App\Http\Controllers\Staff\KategoriController;
 use App\Http\Controllers\Staff\SupplierController;
 use App\Http\Controllers\Staff\PeminjamanController;
 use App\Http\Controllers\Staff\BarangMasukController;
+use App\Http\Controllers\Staff\BarangKeluarController;
 use App\Http\Controllers\Staff\PengembalianController;
 use App\Http\Controllers\RequestAkunController as PublicRequestAkunController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
@@ -78,6 +79,13 @@ Route::middleware(['auth', 'isstaff'])->prefix('staff')->name('staff.')->group(f
     Route::get('/barang-masuk/{id}/edit', [BarangMasukController::class, 'edit'])->name('barang_masuk.edit');
     Route::delete('/barang-masuk/{id}', [BarangMasukController::class, 'destroy'])->name('barang_masuk.destroy');
     Route::get('/barang/{id}/stok', [BarangMasukController::class, 'getStokBarang'])->name('barang.stok');
+
+    Route::get('/barang-keluar', [BarangKeluarController::class, 'index'])->name('barang_keluar.index');
+    Route::get('/barang-keluar/create', [BarangKeluarController::class, 'create'])->name('barang_keluar.create');
+    Route::post('/barang-keluar', [BarangKeluarController::class, 'store'])->name('barang_keluar.store');
+    Route::get('/barang-keluar/{id}/edit', [BarangKeluarController::class, 'edit'])->name('barang_keluar.edit');
+    Route::delete('/barang-keluar/{id}', [BarangKeluarController::class, 'destroy'])->name('barang_keluar.destroy');
+    Route::get('/barang/{id}/stok', [BarangKeluarController::class, 'getStokBarang'])->name('barang.stok');
 
 });
 

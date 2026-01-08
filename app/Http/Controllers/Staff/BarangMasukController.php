@@ -14,13 +14,35 @@ use Illuminate\Support\Facades\Validator;
 
 class BarangMasukController extends Controller
 {
-    public function index()
+    // public function index()
+    // {
+    //     return view('staff.barang_masuk.index', [
+    //         'barangs' => Barang::all(),
+    //         'barangsMasuk' => BarangMasuk::all(),
+    //         'suppliers' => Supplier::all(),
+    //     ]);
+    // }
+
+     public function index(Request $request)
     {
-        return view('staff.barang_masuk.index', [
-            'barangs' => Barang::all(),
-            'barangsMasuk' => BarangMasuk::all(),
-            'suppliers' => Supplier::all(),
-        ]);
+        $query = BarangMasuk::with(['supplier', 'satuan', 'barang']);
+
+        // Dropdown kategori
+        // $kategoris = Supplier::orderBy('name')->get();
+
+        // Search nama barang
+        if ($request->filled('search')) {
+            $query->where('nama_barang', 'like', '%' . $request->search . '%');
+        }
+
+        $barangMasuks = $query->get();
+
+        // AJAX
+        if ($request->ajax()) {
+            return view('staff.barang_masuk._table', compact('barangMasuks'))->render();
+        }
+
+        return view('staff.barang_masuk.index', compact('barangMasuks'));
     }
 
     public function getDataBarangMasuk()
